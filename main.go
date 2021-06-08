@@ -5,6 +5,7 @@ import (
 	"go_web_Capstone/dao"
 	"go_web_Capstone/models"
 	"go_web_Capstone/routers"
+	"go_web_Capstone/setting"
 )
 
 
@@ -22,7 +23,7 @@ func main() {
 	//sql: CREATE DATABASE bubble;
 
 	//Connect  to database
-	err := dao.InitMySQL()
+	err := dao.InitMySQL(setting.Conf.MySQLConfig)
 
 	if err != nil {
 		panic(err)
