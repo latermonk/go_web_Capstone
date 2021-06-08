@@ -49,6 +49,7 @@ func main() {
 	}
 	defer DB.Close()
 
+	//bangding MODEL
 	DB.AutoMigrate(&Todo{})
 
 	//Create record
