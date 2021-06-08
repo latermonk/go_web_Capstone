@@ -6,12 +6,11 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"go_web_Capstone/controller"
+	"go_web_Capstone/dao"
 	"net/http"
 )
 
-var (
-	DB *gorm.DB
-)
+
 
 // Todo Model
 type Todo struct {
@@ -28,14 +27,7 @@ type USerInfo struct {
 }
 
 
-func initMySQL() ( err error){
-	dsn := "root:root@tcp(127.0.0.1:13306)/bubble?charset=utf8mb4&parseTime=True&loc=Local"
-	DB, err = gorm.Open("mysql", dsn)
-	if err != nil {
-		return
-	}
-	return DB.DB().Ping()
-}
+
 
 func main() {
 	fmt.Println("Hello , CapStone , I'm Coming !!!")
@@ -44,11 +36,13 @@ func main() {
 	//sql: CREATE DATABASE bubble;
 
 	//Connect  to database
-	err := initMySQL()
+	//err := initMySQL()
+	err := dao.InitMySQL()
+
 	if err != nil {
 		panic(err)
 	}
-	defer DB.Close()
+	defer dao.Close()
 
 	//bangding MODEL
 	DB.AutoMigrate(&Todo{})
