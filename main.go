@@ -78,8 +78,21 @@ func main() {
 	v1Group := r.Group("v1")
 	{
 		//add POST
+		//get the vale ,store to db , show on the final page
 		v1Group.POST("/todo", func(c *gin.Context) {
 			//fmt.Println("POST")
+			var todo Todo
+			c.BindJSON(&todo)
+
+			if err = DB.Create(&todo).Error;err!= nil{
+				c.JSON(http.StatusOK, gin.H{
+					"error" : err.Error(),
+				})
+			}else{
+				c.JSON(http.StatusOK, todo)
+			}
+
+
 		})
 		//get
 		v1Group.GET("/todo", func(c *gin.Context) {
