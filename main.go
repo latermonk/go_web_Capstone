@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"net/http"
 )
 
 var (
@@ -51,18 +52,52 @@ func main() {
 	DB.AutoMigrate(&Todo{})
 
 	//Create record
-	u1 := Todo{001, "tt01", true }
+	//u1 := Todo{001, "tt01", true }
 
-	var t Todo
-	db.First(&t)
+	//var t Todo
+	//db.First(&t)
 	//fmt.Print()
 
 
 
 
 
-
+	//Create gin route
 	r := gin.Default()
+
+	//tel gin framework where is the static
+	r.Static("/static", "static")
+	r.LoadHTMLGlob("templates/*")
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", nil)
+	})
+
+	//TODO
+	//v1
+	v1Group := r.Group("v1")
+	{
+		//add POST
+		v1Group.POST("/todo", func(c *gin.Context) {
+			//fmt.Println("POST")
+		})
+		//get
+		v1Group.GET("/todo", func(c *gin.Context) {
+
+		})
+		v1Group.GET("/todo/:id", func(c *gin.Context) {
+
+		})
+		//PUT
+		v1Group.PUT("/todo/:id", func(c *gin.Context) {
+
+		})
+		//DEL
+		v1Group.DELETE("/todo/:id", func(c *gin.Context) {
+
+		})
+
+	}
+
 
 
 	r.Run(":9999")
